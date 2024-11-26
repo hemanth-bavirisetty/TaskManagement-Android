@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -69,9 +70,14 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
 
     private ImageButton logoutButton;
 
+    private FloatingActionButton  fabFilterTasks;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard);
 
         logoutButton = findViewById(R.id.logout_button);
@@ -80,6 +86,7 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
         displayDateFormat = new SimpleDateFormat(DATE_FORMAT_DISPLAY, Locale.getDefault());
         apiDateFormat = new SimpleDateFormat(DATE_FORMAT_API, Locale.getDefault());
 
+
         initializeViews();
         initializeFilterViews();
         setupSpinners();
@@ -87,7 +94,26 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
         setupFilterButtons();
         setupFab();
         fetchTasksFromServer();
+
+        //fabFilterTasks = findViewById(R.id.fab_filter_tasks);
+//        fabFilterTasks.setOnClickListener(v -> showFilterBottomSheet());
+
     }
+
+    private void setupFab() {
+        fabAddTask = findViewById(R.id.fab_add_task);
+        fabAddTask.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CreateTaskActivity.class);
+            startActivity(intent);
+        });
+    }
+
+//    private void showFilterBottomSheet() {
+//        FilterBottomSheet filterBottomSheet = new FilterBottomSheet();
+//        filterBottomSheet.show(getSupportFragmentManager(), "filter_bottom_sheet");
+//    }
+
+
 
     private void showLogoutConfirmation() {
         new AlertDialog.Builder(this)
@@ -102,7 +128,7 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
         new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://10.0.2.2:8000/api/logout/");
+                URL url = new URL("http://172.16.20.111:8000/api/logout/");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Authorization", "Bearer " + getAccessToken());
@@ -146,13 +172,13 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
             }
         }).start();
     }
-    private void setupFab() {
-        fabAddTask = findViewById(R.id.fab_add_task);
-        fabAddTask.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CreateTaskActivity.class);
-            startActivity(intent);
-        });
-    }
+//    private void setupFab() {
+//        fabAddTask = findViewById(R.id.fab_add_task);
+//        fabAddTask.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, CreateTaskActivity.class);
+//            startActivity(intent);
+//        });
+//    }
 
     private void initializeViews() {
         totalTasksTextView = findViewById(R.id.total_task_count);
@@ -192,7 +218,7 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
     private void setupSpinners() {
         ArrayAdapter<CharSequence> statusAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
-                new String[]{"All", "yet-to-start", "in-progress", "completed"});
+                new String[]{"All", "yet-to-start", "in-progress", "completed", "hold"});
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusAdapter);
 
@@ -273,7 +299,7 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             try {
-                URL url = new URL("http://10.0.2.2:8000/api/tasks/list/");
+                URL url = new URL("http://172.16.20.111:8000/api/tasks/list/");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
@@ -426,7 +452,7 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
         new Thread(() -> {
             HttpURLConnection connection = null;
             try {
-                URL url = new URL("http://10.0.2.2:8000/api/tasks/delete/" + task.getId() + "/");
+                URL url = new URL("http://172.16.20.111:8000/api/tasks/delete/" + task.getId() + "/");
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("DELETE");
                 connection.setRequestProperty("Authorization", "Bearer " + getAccessToken());
@@ -538,8 +564,7 @@ public class DashBoardActivity extends AppCompatActivity implements TaskAdapter.
         totalTasksTextView.setText(String.valueOf(totalTasks));
         completedTasksTextView.setText(String.valueOf(completedTasks));
         pendingTasksTextView.setText(String.valueOf(pendingTasks));
-        priorityTaskCountTextView.setText(String.format("Low: %d, Medium: %d, High: %d",
-                lowPriorityCount, mediumPriorityCount, highPriorityCount));
+        priorityTaskCountTextView.setText(String.valueOf(highPriorityCount));
 
         taskAdapter.setTasks(tasks);
     }

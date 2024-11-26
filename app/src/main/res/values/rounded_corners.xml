@@ -1,0 +1,8 @@
+<!-- res/values/shape_appearance_rounded.xml -->
+<resources>
+    <style name="ShapeAppearance.Rounded" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+
+    </style>
+</resources>

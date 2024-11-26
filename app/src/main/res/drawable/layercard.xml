@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap android:src="@drawable/cardbg" />
+    </item>
+    <item>
+        <color android:color="#00000000" /> <!-- #80 is 50% opacity -->
+    </item>
+</layer-list>

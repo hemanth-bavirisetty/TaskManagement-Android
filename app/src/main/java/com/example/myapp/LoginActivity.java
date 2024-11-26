@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -19,12 +21,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameInput, passwordInput;
     private String username, password;
-    private final String LOGIN_URL = "http://10.0.2.2:8000/api/login/"; // Replace with your backend URL
+    private final String LOGIN_URL = "http://172.16.20.111:8000/api/login/"; // Replace with your backend URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login); // Make sure you have this layout for login
+        setContentView(R.layout.activity_login);
+        EdgeToEdge.enable(this);// Make sure you have this layout for login
 
         usernameInput = findViewById(R.id.username_input);
         passwordInput = findViewById(R.id.password_input);

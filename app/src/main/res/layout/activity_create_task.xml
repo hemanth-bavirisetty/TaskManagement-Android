@@ -52,8 +52,9 @@
     <Spinner
         android:id="@+id/create_task_status"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:padding="12dp"
+
         android:background="@drawable/spinner_background"
         android:layout_marginBottom="16dp"/>
 
@@ -68,7 +69,7 @@
     <Spinner
         android:id="@+id/create_task_priority"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:padding="12dp"
         android:background="@drawable/spinner_background"
         android:layout_marginBottom="16dp"/>
@@ -90,15 +91,38 @@
         android:background="@drawable/edit_text_background"
         android:layout_marginBottom="24dp"/>
 
-    <!-- Create Button -->
-    <Button
-        android:id="@+id/create_task_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Task"
-        android:textSize="16sp"
-        android:padding="16dp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+    <!-- Create Button -->
+        <Button
+            android:id="@+id/cancel_task_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/edit_text_background"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:textAllCaps="false"
+            android:backgroundTint="#333333"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/create_task_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Create Task"
+
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:textAllCaps="false"
+            android:background="@drawable/edit_text_background"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
 
 </LinearLayout>
